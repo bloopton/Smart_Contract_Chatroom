@@ -91,3 +91,30 @@ def add_members(channel_str: str, members: List[Identifier]) -> None:
 def _add_members(channel_str: str, members: List[Identifier]) -> None:
     admins.add_members(channel_str = channel_str, members = members)
     
+@public
+@clientside
+def remove_owners(channel_str: str, owners : List[Identifier]) -> None:
+    channel = admins.get_channel(channel_str)
+    with PostTxArgs(channel, [], []):
+        _remove_owners(channel_str, channel, owners)
+
+@executable
+def _remove_owners(channel_str: str, channel: ChannelName, owners : List[Identifier]) -> None:
+    admins.remove_owners(channel_str, channel, owners)
+
+@public
+@clientside
+def remove_members(channel_str: str, members : List[Identifier]) -> None:
+    channel = admins.get_channel(channel_str)
+    with PostTxArgs(channel, [], []):
+        _remove_members(channel_str, channel, members)
+
+@executable
+def _remove_members(channel_str: str, channel: ChannelName, members : List[Identifier]) -> None:
+    admins.remove_members(channel_str, channel, members)
+      
+        
+        
+        
+        
+

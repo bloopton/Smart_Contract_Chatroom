@@ -41,4 +41,22 @@ def test_messages(network):
     with pytest.raises(Exception) as e:
         assert xander_api.get_message_mult(channel_str = 'alice_channel', identity = 'felix')[0] == '...jumps over the lazy dog.'
     
-    import pdb; pdb.set_trace()
+    eve_api.add_owners(channel_str = 'alice_channel', owners = ['carlos'])
+    
+    #remove owner
+    eve_api.remove_owners(channel_str = 'alice_channel', owners = ['alice'])
+    #alice can't add owners
+    with pytest.raises(Exception) as e:
+        alice_api.add_owners(channel_str = 'alice_channel', owners = ['george'])
+
+    #import pdb; pdb.set_trace()
+
+    #remove member
+    eve_api.remove_members(channel_str = 'alice_channel', members = ['alice'])
+    #import pdb; pdb.set_trace()
+
+    #alice can't read messages
+    with pytest.raises(Exception) as e:
+        assert alice_api.get_message_mult(channel_str = 'alice_channel', identity = 'felix')[0] == '...jumps over the lazy dog.'
+
+    
